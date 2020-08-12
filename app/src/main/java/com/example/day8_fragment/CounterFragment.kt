@@ -14,11 +14,54 @@ import kotlinx.android.synthetic.main.fragment_counter.*
  * Use the [CounterFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+//class CounterFragment : Fragment(), View.OnClickListener {
+//    var result: Int = 0
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//
+//    }
+//
+//    override fun onCreateView(
+//        inflater: LayoutInflater, container: ViewGroup?,
+//        savedInstanceState: Bundle?
+//    ): View? {
+//        // Inflate the layout for this fragment
+//        return inflater.inflate(R.layout.fragment_counter, container, false)
+//    }
+//
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//        buttonIncrement.setOnClickListener(this)
+//        buttonDecrement.setOnClickListener(this)
+//    }
+//
+//
+//    override fun onClick(v: View?) {
+//        val activity = activity as MainActivity
+//        when (v) {
+//            buttonIncrement -> {
+//                this.result += 1
+//                activity.sendData(this.result.toString())
+//            }
+//            buttonDecrement -> {
+//                this.result -= 1
+//                activity.sendData(this.result.toString())
+//            }
+//        }
+//    }
+//}
+
 class CounterFragment : Fragment(), View.OnClickListener {
-    var result: Int = 0
+
+    //    lateinit var mainActivity: MainActivity
+    lateinit var counterHandler: CounterHandler
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        println("Counter_Fragment this = $activity")
+//        mainActivity = activity as MainActivity
+        counterHandler = activity as CounterHandler
     }
 
     override fun onCreateView(
@@ -31,21 +74,22 @@ class CounterFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         buttonIncrement.setOnClickListener(this)
         buttonDecrement.setOnClickListener(this)
     }
 
-
     override fun onClick(v: View?) {
-        val activity = activity as MainActivity
         when (v) {
             buttonIncrement -> {
-                this.result += 1
-                activity.sendData(this.result.toString())
+                println("CALL BUTTON INCREMENT")
+//                mainActivity.notifyCounterIncrease()
+                counterHandler.notifyCounterIncrease()
             }
             buttonDecrement -> {
-                this.result -= 1
-                activity.sendData(this.result.toString())
+                println("CALL BUTTON DECREMENT")
+//                mainActivity.notifyCounterDecrease()
+                counterHandler.notifyCounterDecrease()
             }
         }
     }
